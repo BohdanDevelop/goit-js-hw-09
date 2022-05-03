@@ -7,14 +7,16 @@ const bodyRef = document.body;
 const startRef = document.querySelector('[data-start]');
 const stopRef = document.querySelector('[data-stop]');
 
-function onStopClick(id) {
-  clearInterval(id);
-}
 function onStartClick(event) {
   const timerId = setInterval(() => {
     bodyRef.style.backgroundColor = getRandomHexColor();
   }, 1000);
-  stopRef.addEventListener('click', evt => onStopClick(timerId));
+  function onStopClick() {
+    clearInterval(timerId);
+    console.log('yup');
+    stopRef.removeEventListener('click', onStopClick);
+  }
+  stopRef.addEventListener('click', onStopClick);
 }
 
 startRef.addEventListener('click', onStartClick);
